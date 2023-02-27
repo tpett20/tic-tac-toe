@@ -11,8 +11,14 @@ html {
     gap: 1vmin;
   }
   
-  .square{
+  .square {
     width: 25vmin;
     height: 25vmin;
-    border: 1px solid lightblue
+    border: 1px solid lightblue;
+    text-align: center;
+    font-size: 5vmin;
+  }
+
+  .inactive {
+    background-color: lightgrey;
   }
