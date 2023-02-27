@@ -41,16 +41,19 @@ function init() {
 function render() {
     console.log('rendering game')
     if (turn % 2 === 0) {
-        squareChanger ++
+        squareChanger = 1
     } else {
-        squareChanger --
+        squareChanger = (-1)
     }
+    console.log('Turn', turn)
+    console.log('Square Changer', squareChanger)
 }
 
 function setSquare(evt) {
     const squarePlayedIndex = evt.target.id
     console.log('Square Index', squarePlayedIndex)
-    const squarePlayed = board[squarePlayedIndex]
+    let squarePlayed = board[squarePlayedIndex]
+    squarePlayed += squareChanger
     console.log('Square Played Value', squarePlayed)
 }
 
@@ -83,7 +86,7 @@ function handleClick(evt) {
 }
 
 for (squareEl of squareEls) {
-    console.log(squareEl)
+    console.log('adding listener to each:', squareEl)
     squareEl.addEventListener('click', handleClick)
 }
 
