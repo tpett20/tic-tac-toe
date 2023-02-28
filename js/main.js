@@ -12,6 +12,11 @@ const boardTest = {
     c: [1, 2, 3]
 }
 
+playerIcons = {
+    '-1': 'X',
+    '1': 'O'
+}
+
 /*----- state variables -----*/
 
 let turn
@@ -55,9 +60,10 @@ function setSquare(evt) {
     console.log('Square Modifier', squareModifier)
     board[squarePlayedIndex] += squareModifier
     console.log('Square Played Value', board[squarePlayedIndex])
+    console.log('Icon Option', playerIcons[Number(squareModifier)])
     for (squareEl of squareEls) {
-        if (squareEl.id === evt.target.id) {
-            squareEl.textContent = 'O'
+        if (squareEl.id === squarePlayedIndex) {
+            squareEl.textContent = playerIcons[Number(squareModifier)]
         }
     }
     // for (squareEl of squareEls) if squareEls.id === evt.target.id, squareEl.innerText = evt.target.id (or pick from object at .value of squarePlayed)
