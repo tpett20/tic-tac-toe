@@ -58,10 +58,6 @@ h2 {
     background-color: #F4F6F6; 
 }
 
-.game:hover {
-    background-color: #E5E7E9
-}
-
 button {
     font-size: 1.5vmin; 
     border: 0;
@@ -81,10 +77,10 @@ button:hover {
     background-color: #D6EAF8
 }
 
-/* .inactive:hover {
+.inactive:hover {
     background-color: #E5E7E9;
 }
 
-.inactive {
-    background-color: #F4F6F6;
+/* .game-over {
+    background-color: #F9E79F;
 } */

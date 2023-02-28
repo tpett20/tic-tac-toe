@@ -26,6 +26,8 @@ function init() {
     console.log('starting game')
     for (square of squareEls) {
         square.classList.add('inactive')
+        square.classList.remove('first-player')
+        square.classList.remove('second-player')
         square.textContent = ''
     }
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -53,6 +55,8 @@ function render() {
 
 function setSquare(evt) {
     evt.target.classList.remove('inactive')
+    evt.target.classList.remove('first-player')
+    evt.target.classList.remove('second-player')
     // CLEAN THIS UP TO REMOVE first and second player tags when game ends or resets!
     if (squareModifier === 1) {
         evt.target.classList.add('first-player')
@@ -95,14 +99,15 @@ function stopPlay() {
     console.log('Stopping Play')
     for (squareEl of squareEls) {
         squareEl.removeEventListener('click', handleClick)
+        squareEl.classList.remove('inactive')
     }
     displayWinner()
 }
 
 function displayWinner() {
     console.log('game over')
-    turnEl.textContent = 'No More Moves'
-    winnerEl.textContent = `Winnder: ${winnerIcon}`
+    turnEl.textContent = `🏆 ${winnerIcon} 🏆`
+    winnerEl.textContent = `Winner: ${winnerIcon}`
 
 }
 
