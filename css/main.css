@@ -1,24 +1,36 @@
 html {
-    height: 100%;
-    width: 100%;
-  }
-  
-  #board {
-    display: flex;
-    width: 80vmin;
-  /* vmin - calculates the percentage of the shortest side of your viewport */ 
-    flex-wrap: wrap;
-    gap: 1vmin;
-  }
-  
-  .square {
-    width: 25vmin;
-    height: 25vmin;
-    border: 1px solid lightblue;
-    text-align: center;
-    font-size: 10vmin;
-  }
+height: 100%;
+width: 100%;
+}
 
-  .inactive {
-    background-color: lightgrey;
-  }
+#board {
+display: flex;
+width: 80vmin;
+/* vmin - calculates the percentage of the shortest side of your viewport */ 
+flex-wrap: wrap;
+gap: 1vmin;
+}
+
+.square {
+width: 25vmin;
+height: 25vmin;
+/* border: 1px solid black; */
+text-align: center; 
+font-size: 10vmin;
+}
+
+.first-player {
+    background-color: #FADBD8
+}
+
+.second-player {
+    background-color: #D6EAF8
+}
+
+.inactive:hover {
+    background-color: #E5E7E9;
+}
+
+.inactive {
+background-color: #F4F6F6;
+}

@@ -11,6 +11,7 @@ let turn
 let squareModifier
 let board = []
 let playerIcon
+let winnerIcon
 
 /*----- cached elements  -----*/
 
@@ -26,12 +27,11 @@ function init() {
     for (square of squareEls) {
         square.classList.add('inactive')
         square.textContent = ''
-        square.addEventListener('click', handleClick)
     }
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     console.log('Board of Zeroes', board)
     turn = 0
-    winnerEl.textContent = 'Winner: TBD'
+    winnerEl.textContent = 'Winner: ?'
     render()
 }
 
@@ -43,13 +43,22 @@ function render() {
         squareModifier = (-1)
     }
     playerIcon = playerIcons[Number(squareModifier)]
+    winnerIcon = playerIcons[-Number(squareModifier)]
     turnEl.textContent = `Your Move: ${playerIcon}`
     console.log('Turn', turn)
     console.log('Square Changer', squareModifier)
     console.log('Player Icon', playerIcon)
+    console.log('Winner Icon', winnerIcon)
 }
 
 function setSquare(evt) {
+    evt.target.classList.remove('inactive')
+    // CLEAN THIS UP TO REMOVE first and second player tags when game ends or resets!
+    if (squareModifier === 1) {
+        evt.target.classList.add('first-player')
+    } else {
+        evt.target.classList.add('second-player')
+    }
     const squarePlayedIndex = evt.target.id
     console.log('Square Index', squarePlayedIndex)
     console.log('Square Modifier', squareModifier)
@@ -93,7 +102,7 @@ function stopPlay() {
 function displayWinner() {
     console.log('game over')
     turnEl.textContent = 'No More Moves'
-    winnerEl.textContent = `${playerIcon} Wins the Game!`
+    winnerEl.textContent = `${winnerIcon} Wins the Game!`
 
 }
 
@@ -106,12 +115,16 @@ function handleClick(evt) {
     checkWinStatus()
 }
 
-// for (squareEl of squareEls) {
-//     console.log('adding listener to each:', squareEl)
-//     squareEl.addEventListener('click', handleClick)
-// }
+for (squareEl of squareEls) {
+    console.log('adding listener to each:', squareEl)
+    squareEl.addEventListener('click', handleClick)
+}
 
 function handleReset() {
+    for (squareEl of squareEls) {
+        console.log('adding listener to each:', squareEl)
+        squareEl.addEventListener('click', handleClick)
+    }
     init()
 }
 
