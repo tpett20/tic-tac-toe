@@ -15,7 +15,7 @@ let winnerIcon
 
 /*----- cached elements  -----*/
 
-const squareEls = document.querySelectorAll('div.square')
+const squareEls = document.querySelectorAll('div.game')
 const resetBtn = document.querySelector('button')
 const turnEl = document.querySelector('#turn')
 const winnerEl = document.querySelector('#winner')
@@ -31,7 +31,7 @@ function init() {
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     console.log('Board of Zeroes', board)
     turn = 0
-    winnerEl.textContent = 'Winner: ?'
+    winnerEl.textContent = 'Winner: ❓'
     render()
 }
 
@@ -102,7 +102,7 @@ function stopPlay() {
 function displayWinner() {
     console.log('game over')
     turnEl.textContent = 'No More Moves'
-    winnerEl.textContent = `${winnerIcon} Wins the Game!`
+    winnerEl.textContent = `Winnder: ${winnerIcon}`
 
 }
 
