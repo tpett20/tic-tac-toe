@@ -1,8 +1,8 @@
 /*----- constants -----*/
 
 playerIcons = {
-    '-1': 'X',
-    '1': 'O'
+    '-1': '🥨',
+    '1': '🍩'
 }
 
 /*----- state variables -----*/
@@ -67,7 +67,7 @@ function setSquare(evt) {
     console.log('Icon Option', playerIcon)
     for (squareEl of squareEls) {
         if (squareEl.id === squarePlayedIndex) {
-            squareEl.textContent = playerIcon
+            squareEl.innerHTML = `<p class="square-text">${playerIcon}</p>`
             squareEl.removeEventListener('click', handleClick)
         }
     }
