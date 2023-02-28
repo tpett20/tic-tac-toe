@@ -21,12 +21,13 @@ playerIcons = {
 
 let turn
 let squareModifier
-const board = []
+let board = []
 let gameStatus
 
 /*----- cached elements  -----*/
 
 const squareEls = document.querySelectorAll('div.square')
+const resetBtn = document.querySelector('button')
 
 /*----- functions -----*/
 
@@ -34,10 +35,9 @@ function init() {
     console.log('starting game')
     for (square of squareEls) {
         square.classList.add('inactive')
+        square.textContent = ''
     }
-    for (let i=0; i<9; i++){
-        board.push(0)
-    }
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     console.log('Board of Zeroes', board)
     turn = 0
     render()
@@ -72,20 +72,28 @@ function setSquare(evt) {
 function checkWinStatus() {
     if (
         // Horizontal Wins
-        (board[0] === board[1] && board[0] === board[2]) ||
-        (board[3] === board[4] && board[3] === board[5]) ||
-        (board[6] === board[7] && board[6] === board[8]) ||
+        (board[0] && board[0] === board[1] && board[0] === board[2]) ||
+        (board[3] && board[3] === board[4] && board[3] === board[5]) ||
+        (board[6] && board[6] === board[7] && board[6] === board[8]) ||
         // Vertical Wins
-        (board[0] === board[3] && board[0] === board[6]) ||
-        (board[1] === board[4] && board[1] === board[7]) ||
-        (board[2] === board[5] && board[2] === board[8]) ||
+        (board[0] && board[0] === board[3] && board[0] === board[6]) ||
+        (board[1] && board[1] === board[4] && board[1] === board[7]) ||
+        (board[2] && board[2] === board[5] && board[2] === board[8]) ||
         // Diagonal Wins
-        (board[0] === board[4] && board[0] === board[8]) ||
-        (board[2] === board[4] && board[2] === board[6])
+        (board[0] && board[0] === board[4] && board[0] === board[8]) ||
+        (board[2] && board[2] === board[4] && board[2] === board[6])
         ) {
         gameStatus = 'Game Over'
-        displayWinner()
+        stopPlay()
     }
+}
+
+function stopPlay() {
+    console.log('Stopping Play')
+    for (squareEl of squareEls) {
+        squareEl.removeEventListener('click', handleClick)
+    }
+    displayWinner()
 }
 
 function displayWinner() {
@@ -106,6 +114,10 @@ for (squareEl of squareEls) {
     squareEl.addEventListener('click', handleClick)
 }
 
-// squareEls.addEventListener('click', setSquare)
+function handleReset() {
+    init()
+}
+
+resetBtn.addEventListener('click', handleReset)
 
 init()
