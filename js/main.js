@@ -1,17 +1,5 @@
 /*----- constants -----*/
 
-const colors = {
-    '0': 'lightgrey',
-    '1': 'lightblue',
-    '-1': 'lightgreen'
-}
-
-const boardTest = {
-    a: [1, 2, 3],
-    b: [1, 2, 3],
-    c: [1, 2, 3]
-}
-
 playerIcons = {
     '-1': 'X',
     '1': 'O'
@@ -22,12 +10,14 @@ playerIcons = {
 let turn
 let squareModifier
 let board = []
-let gameStatus
+let playerIcon
 
 /*----- cached elements  -----*/
 
 const squareEls = document.querySelectorAll('div.square')
 const resetBtn = document.querySelector('button')
+const turnEl = document.querySelector('#turn')
+const winnerEl = document.querySelector('#winner')
 
 /*----- functions -----*/
 
@@ -36,10 +26,12 @@ function init() {
     for (square of squareEls) {
         square.classList.add('inactive')
         square.textContent = ''
+        square.addEventListener('click', handleClick)
     }
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     console.log('Board of Zeroes', board)
     turn = 0
+    winnerEl.textContent = 'Winner: TBD'
     render()
 }
 
@@ -50,8 +42,11 @@ function render() {
     } else {
         squareModifier = (-1)
     }
+    playerIcon = playerIcons[Number(squareModifier)]
+    turnEl.textContent = `Your Move: ${playerIcon}`
     console.log('Turn', turn)
     console.log('Square Changer', squareModifier)
+    console.log('Player Icon', playerIcon)
 }
 
 function setSquare(evt) {
@@ -60,10 +55,10 @@ function setSquare(evt) {
     console.log('Square Modifier', squareModifier)
     board[squarePlayedIndex] += squareModifier
     console.log('Square Played Value', board[squarePlayedIndex])
-    console.log('Icon Option', playerIcons[Number(squareModifier)])
+    console.log('Icon Option', playerIcon)
     for (squareEl of squareEls) {
         if (squareEl.id === squarePlayedIndex) {
-            squareEl.textContent = playerIcons[Number(squareModifier)]
+            squareEl.textContent = playerIcon
             squareEl.removeEventListener('click', handleClick)
         }
     }
@@ -83,7 +78,6 @@ function checkWinStatus() {
         (board[0] && board[0] === board[4] && board[0] === board[8]) ||
         (board[2] && board[2] === board[4] && board[2] === board[6])
         ) {
-        gameStatus = 'Game Over'
         stopPlay()
     }
 }
@@ -98,21 +92,24 @@ function stopPlay() {
 
 function displayWinner() {
     console.log('game over')
+    turnEl.textContent = 'No More Moves'
+    winnerEl.textContent = `${playerIcon} Wins the Game!`
+
 }
 
 /*----- event listeners -----*/
 
 function handleClick(evt) {
     setSquare(evt)
-    checkWinStatus()
     turn++
     render()
+    checkWinStatus()
 }
 
-for (squareEl of squareEls) {
-    console.log('adding listener to each:', squareEl)
-    squareEl.addEventListener('click', handleClick)
-}
+// for (squareEl of squareEls) {
+//     console.log('adding listener to each:', squareEl)
+//     squareEl.addEventListener('click', handleClick)
+// }
 
 function handleReset() {
     init()
