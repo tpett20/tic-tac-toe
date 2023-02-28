@@ -12,6 +12,7 @@ let squareModifier
 let board = []
 let playerIcon
 let winnerIcon
+let gameResult
 
 /*----- cached elements  -----*/
 
@@ -90,7 +91,11 @@ function checkWinStatus() {
         // Diagonal Wins
         (board[0] && board[0] === board[4] && board[0] === board[8]) ||
         (board[2] && board[2] === board[4] && board[2] === board[6])
-        ) {
+    ) {
+        gameResult = 'win'
+        stopPlay()
+    } else if (!board.includes(0)) {
+        gameResult = 'tie'
         stopPlay()
     }
 }
@@ -101,13 +106,24 @@ function stopPlay() {
         squareEl.removeEventListener('click', handleClick)
         squareEl.classList.remove('inactive')
     }
-    displayWinner()
+    if (gameResult === 'win') {
+        displayWinner()
+    } else if (gameResult === 'tie') {
+        displayTie()
+    }
 }
 
 function displayWinner() {
     console.log('game over')
     turnEl.textContent = `🏆 ${winnerIcon} 🏆`
     winnerEl.textContent = `Winner: ${winnerIcon}`
+
+}
+
+function displayTie() {
+    console.log('tie game')
+    turnEl.textContent = `It's a 👔!`
+    winnerEl.textContent = `Winner: 🙀`
 
 }
 
