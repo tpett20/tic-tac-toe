@@ -15,7 +15,7 @@ const boardTest = {
 /*----- state variables -----*/
 
 let turn
-let squareChanger
+let squareModifier
 const board = []
 let gameStatus
 
@@ -41,20 +41,26 @@ function init() {
 function render() {
     console.log('rendering game')
     if (turn % 2 === 0) {
-        squareChanger = 1
+        squareModifier = 1
     } else {
-        squareChanger = (-1)
+        squareModifier = (-1)
     }
     console.log('Turn', turn)
-    console.log('Square Changer', squareChanger)
+    console.log('Square Changer', squareModifier)
 }
 
 function setSquare(evt) {
     const squarePlayedIndex = evt.target.id
     console.log('Square Index', squarePlayedIndex)
-    let squarePlayed = board[squarePlayedIndex]
-    squarePlayed += squareChanger
-    console.log('Square Played Value', squarePlayed)
+    console.log('Square Modifier', squareModifier)
+    board[squarePlayedIndex] += squareModifier
+    console.log('Square Played Value', board[squarePlayedIndex])
+    for (squareEl of squareEls) {
+        if (squareEl.id === evt.target.id) {
+            squareEl.textContent = 'O'
+        }
+    }
+    // for (squareEl of squareEls) if squareEls.id === evt.target.id, squareEl.innerText = evt.target.id (or pick from object at .value of squarePlayed)
 }
 
 function checkWinStatus() {
@@ -78,7 +84,7 @@ function checkWinStatus() {
 /*----- event listeners -----*/
 
 function handleClick(evt) {
-    console.log('this works')
+    console.log('handleClick function runs')
     setSquare(evt)
     checkWinStatus()
     turn++
