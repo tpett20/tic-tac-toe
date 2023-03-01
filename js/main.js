@@ -94,7 +94,7 @@ function modifySquare(evt) {
     }
 }
 
-function checkWinStatus() {
+function checkResultStatus() {
     if (
         // Horizontal Win Conditions
         (board[0] && board[0] === board[1] && board[0] === board[2]) ||
@@ -154,7 +154,7 @@ function handleClick(evt) {
     modifySquare(evt)
     turn++
     render()
-    checkWinStatus()
+    checkResultStatus()
 }
 
 for (squareEl of squareEls) {
