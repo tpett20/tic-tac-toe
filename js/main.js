@@ -28,7 +28,8 @@ const winnerEl = document.querySelector('#winner')
 function init() {
     initSquares()
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    turn = 0
+    turn = Math.floor(Math.random()*2)
+    console.log(turn)
     winnerEl.textContent = 'Winner: ❓'
     render()
 }
