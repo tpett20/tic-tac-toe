@@ -14,13 +14,12 @@ body {
     justify-content: center;
 }
 
-#board {
+main {
     display: flex;
-    width: 80vmin;
-    /* vmin - calculates the percentage of the shortest side of your viewport */
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    width: 80vmin;
     gap: 1vmin;
 }
 
@@ -31,42 +30,29 @@ body {
     justify-content: center;
     width: 25vmin;
     height: 10vmin;
-    /* border: 1px solid black; */
     text-align: center;
-    font-size: 3vmin;
+    font-size: 2.75vmin;
 }
 
 h1 {
-    font-size: 3vmin; 
+    font-size: 3.25vmin; 
     margin: 0;
 }
 
 h2 {
-    font-size: 2vmin;
+    font-size: 2.2vmin;
     margin: 0;
 }
 
-.game {
+.square {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 25vmin;
     height: 25vmin;
-    /* border: 1px solid black; */
     text-align: center;
     font-size: 14vmin;
     background-color: #F4F6F6; 
-}
-
-button {
-    font-size: 1.5vmin; 
-    border: 0;
-    padding: 1vmin 2vmin;
-    background-color: #F4F6F6
-}
-
-button:hover {
-    background-color: #E5E7E9
 }
 
 .first-player {
@@ -81,6 +67,18 @@ button:hover {
     background-color: #E5E7E9;
 }
 
-/* .game-over {
+button {
+    font-size: 1.5vmin; 
+    border: 0;
+    padding: 1vmin 2vmin;
+    background-color: #F4F6F6
+}
+
+button:hover {
+    background-color: #E5E7E9
+}
+
+.play-again {
     background-color: #F7DC6F;
-} */
+    font-weight: bold;
+}

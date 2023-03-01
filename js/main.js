@@ -16,7 +16,7 @@ let gameResult
 
 /*----- cached elements  -----*/
 
-const squareEls = document.querySelectorAll('div.game')
+const squareEls = document.querySelectorAll('div.square')
 const resetBtn = document.querySelector('button')
 const turnEl = document.querySelector('#turn')
 const winnerEl = document.querySelector('#winner')
@@ -106,11 +106,18 @@ function stopPlay() {
         squareEl.removeEventListener('click', handleClick)
         squareEl.classList.remove('inactive')
     }
+    highlightBtn()
     if (gameResult === 'win') {
         displayWinner()
     } else if (gameResult === 'tie') {
         displayTie()
     }
+}
+
+function highlightBtn() {
+    console.log('Start Over is now Play Again')
+    resetBtn.classList.add('play-again')
+    resetBtn.textContent = 'Play Again!'
 }
 
 function displayWinner() {
