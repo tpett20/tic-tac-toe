@@ -23,56 +23,71 @@ const winnerEl = document.querySelector('#winner')
 
 /*----- functions -----*/
 
+// Initialize
+
 function init() {
-    console.log('starting game')
-    for (square of squareEls) {
-        square.classList.add('inactive')
-        square.classList.remove('first-player')
-        square.classList.remove('second-player')
-        square.textContent = ''
-    }
+    initSquares()
     board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    console.log('Board of Zeroes', board)
     turn = 0
     winnerEl.textContent = 'Winner: ❓'
     render()
 }
 
+function initSquares() {
+    for (square of squareEls) {
+        square.classList.add('available')
+        square.classList.remove('first-player')
+        square.classList.remove('second-player')
+        square.textContent = ''
+    }
+}
+
+// Render
+
 function render() {
-    console.log('rendering game')
+    renderModifier()
+    renderIcons()
+    renderBtn()
+    turnEl.textContent = `Your Move: ${playerIcon}`
+}
+
+function renderModifier() {
     if (turn % 2 === 0) {
         squareModifier = 1
     } else {
         squareModifier = (-1)
-    }
-    playerIcon = playerIcons[Number(squareModifier)]
-    winnerIcon = playerIcons[-Number(squareModifier)]
-    turnEl.textContent = `Your Move: ${playerIcon}`
-    console.log('Turn', turn)
-    console.log('Square Changer', squareModifier)
-    console.log('Player Icon', playerIcon)
-    console.log('Winner Icon', winnerIcon)
+    } 
 }
 
-function setSquare(evt) {
-    evt.target.classList.remove('inactive')
-    evt.target.classList.remove('first-player')
-    evt.target.classList.remove('second-player')
-    // CLEAN THIS UP TO REMOVE first and second player tags when game ends or resets!
+function renderIcons() {
+    playerIcon = playerIcons[Number(squareModifier)]
+    winnerIcon = playerIcons[-Number(squareModifier)]
+}
+
+function renderBtn() {
+    resetBtn.classList.remove('play-again')
+    resetBtn.textContent = 'Start Over'
+}
+
+// Event Response
+
+function modifySquare(evt) {
+    // Modify Classes for CSS Styling
+    const selectedSquare = evt.target
+    selectedSquare.classList.remove('available')
+    selectedSquare.classList.remove('first-player')
+    selectedSquare.classList.remove('second-player')
     if (squareModifier === 1) {
-        evt.target.classList.add('first-player')
+        selectedSquare.classList.add('first-player')
     } else {
-        evt.target.classList.add('second-player')
+        selectedSquare.classList.add('second-player')
     }
-    const squarePlayedIndex = evt.target.id
-    console.log('Square Index', squarePlayedIndex)
-    console.log('Square Modifier', squareModifier)
-    board[squarePlayedIndex] += squareModifier
-    console.log('Square Played Value', board[squarePlayedIndex])
-    console.log('Icon Option', playerIcon)
+    // Modify Square Content and Clickability
+    const squareIndex = selectedSquare.id
+    board[squareIndex] += squareModifier
     for (squareEl of squareEls) {
-        if (squareEl.id === squarePlayedIndex) {
-            squareEl.innerHTML = `<p class="square-text">${playerIcon}</p>`
+        if (squareEl.id === squareIndex) {
+            squareEl.innerHTML = `<p>${playerIcon}</p>`
             squareEl.removeEventListener('click', handleClick)
         }
     }
@@ -80,15 +95,15 @@ function setSquare(evt) {
 
 function checkWinStatus() {
     if (
-        // Horizontal Wins
+        // Horizontal Win Conditions
         (board[0] && board[0] === board[1] && board[0] === board[2]) ||
         (board[3] && board[3] === board[4] && board[3] === board[5]) ||
         (board[6] && board[6] === board[7] && board[6] === board[8]) ||
-        // Vertical Wins
+        // Vertical Win Conditions
         (board[0] && board[0] === board[3] && board[0] === board[6]) ||
         (board[1] && board[1] === board[4] && board[1] === board[7]) ||
         (board[2] && board[2] === board[5] && board[2] === board[8]) ||
-        // Diagonal Wins
+        // Diagonal Win Conditions
         (board[0] && board[0] === board[4] && board[0] === board[8]) ||
         (board[2] && board[2] === board[4] && board[2] === board[6])
     ) {
@@ -101,12 +116,8 @@ function checkWinStatus() {
 }
 
 function stopPlay() {
-    console.log('Stopping Play')
-    for (squareEl of squareEls) {
-        squareEl.removeEventListener('click', handleClick)
-        squareEl.classList.remove('inactive')
-    }
-    highlightBtn()
+    disableSquares()
+    highlightResetBtn()
     if (gameResult === 'win') {
         displayWinner()
     } else if (gameResult === 'tie') {
@@ -114,43 +125,43 @@ function stopPlay() {
     }
 }
 
-function highlightBtn() {
-    console.log('Start Over is now Play Again')
+function disableSquares () {
+    for (squareEl of squareEls) {
+        squareEl.removeEventListener('click', handleClick)
+        squareEl.classList.remove('available')
+    }
+}
+
+function highlightResetBtn() {
     resetBtn.classList.add('play-again')
     resetBtn.textContent = 'Play Again!'
 }
 
 function displayWinner() {
-    console.log('game over')
     turnEl.textContent = `🏆 ${winnerIcon} 🏆`
     winnerEl.textContent = `Winner: ${winnerIcon}`
-
 }
 
 function displayTie() {
-    console.log('tie game')
     turnEl.textContent = `It's a 👔!`
     winnerEl.textContent = `Winner: 🙀`
-
 }
 
 /*----- event listeners -----*/
 
 function handleClick(evt) {
-    setSquare(evt)
+    modifySquare(evt)
     turn++
     render()
     checkWinStatus()
 }
 
 for (squareEl of squareEls) {
-    console.log('adding listener to each:', squareEl)
     squareEl.addEventListener('click', handleClick)
 }
 
 function handleReset() {
     for (squareEl of squareEls) {
-        console.log('adding listener to each:', squareEl)
         squareEl.addEventListener('click', handleClick)
     }
     init()
@@ -158,4 +169,5 @@ function handleReset() {
 
 resetBtn.addEventListener('click', handleReset)
 
+// Initialize Game:
 init()
